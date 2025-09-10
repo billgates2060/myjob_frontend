@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Vaga - MyJob Guiné-Bissau</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .job-details-container {
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+        
+        .job-details-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .job-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-right: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-light);
+        }
+        
+        .job-logo img {
+            max-width: 80%;
+            max-height: 80%;
+        }
+        
+        .job-title-info h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        
+        .company-name {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .job-meta-item {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .job-meta-item i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .job-actions {
+            margin-left: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }
+        
+        .job-actions .btn {
+            min-width: 180px;
+        }
+        
+        .job-actions .save-job {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .job-actions .save-job:hover {
+            color: var(--primary-color);
+        }
+        
+        .job-content {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .job-main {
+            flex: 1;
+        }
+        
+        .job-sidebar {
+            flex: 0 0 300px;
+        }
+        
+        .job-section {
+            margin-bottom: 30px;
+        }
+        
+        .job-section h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        .job-section p {
+            line-height: 1.7;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+        
+        .job-section ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .job-section ul li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .company-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .company-card .company-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+        }
+        
+        .company-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .company-card p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .company-card .btn {
+            width: 100%;
+        }
+        
+        .similar-jobs {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .similar-jobs h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .similar-job-item {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .similar-job-item:last-child {
+            border-bottom: none;
+        }
+        
+        .similar-job-item h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .similar-job-item .company {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        
+        .similar-job-item .meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        
+        .apply-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .apply-modal.active {
+            display: flex;
+        }
+        
+        .apply-modal-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .apply-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .apply-modal-header h3 {
+            font-size: 22px;
+            color: var(--text-color);
+        }
+        
+        .apply-modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .apply-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .apply-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .apply-form input,
+        .apply-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .apply-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .apply-form .file-input {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .apply-form .file-input-button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: var(--bg-light);
+            border: 1px dashed var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .apply-form .file-input-button:hover {
+            background-color: #e9ecef;
+        }
+        
+        .apply-form .file-name {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .apply-form .submit-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        @media (max-width: 992px) {
+            .job-content {
+                flex-direction: column;
+            }
+            
+            .job-sidebar {
+                flex: 0 0 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .job-details-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .job-logo {
+                margin-bottom: 15px;
+            }
+            
+            .job-actions {
+                margin-left: 0;
+                margin-top: 20px;
+                align-items: flex-start;
+                width: 100%;
+            }
+            
+            .job-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">MyJob</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="jobs.html" class="active">Vagas</a></li>
+                    <li><a href="companies.html">Empresas</a></li>
+                    <li><a href="about.html">Sobre</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Entrar</a>
+                <a href="register.html" class="btn btn-primary">Cadastrar</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="job-details-container">
+                <div class="job-details-header">
+                    <div class="job-logo">
+                        <img src="images/sos_logo.jpeg" alt="Logo da Empresa">
+                    </div>
+                    
+                    <div class="job-title-info">
+                        <h1>Gestor de Projetos de Desenvolvimento</h1>
+                        <p class="company-name">ONG Internacional</p>
+                        
+                        <div class="job-meta">
+                            <div class="job-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Bissau, Guiné-Bissau</span>
+                            </div>
+                            <div class="job-meta-item">
+                                <i class="fas fa-briefcase"></i>
+                                <span>Tempo Integral</span>
+                            </div>
+                            <div class="job-meta-item">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <span>500.000 - 700.000 XOF</span>
+                            </div>
+                            <div class="job-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Publicado há 3 dias</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-actions">
+                        <button id="apply-button" class="btn btn-primary">Candidatar-se</button>
+                        <div class="save-job">
+                            <i class="far fa-bookmark"></i>
+                            <span>Salvar vaga</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="job-content">
+                    <div class="job-main">
+                        <div class="job-section">
+                            <h2>Descrição da Vaga</h2>
+                            <p>A ONG Internacional está à procura de um Gestor de Projetos de Desenvolvimento experiente para liderar iniciativas de desenvolvimento comunitário em Guiné-Bissau. O candidato ideal terá experiência comprovada na gestão de projetos de desenvolvimento, preferencialmente na África Ocidental.</p>
+                            <p>Esta é uma oportunidade única para contribuir significativamente para o desenvolvimento sustentável em Guiné-Bissau, trabalhando com comunidades locais e parceiros internacionais.</p>
+                        </div>
+                        
+                        <div class="job-section">
+                            <h2>Responsabilidades</h2>
+                            <ul>
+                                <li>Coordenar e supervisionar a implementação de projetos de desenvolvimento comunitário</li>
+                                <li>Desenvolver e manter relações com parceiros locais, autoridades governamentais e outras ONGs</li>
+                                <li>Gerir orçamentos de projetos e garantir a conformidade com os requisitos dos doadores</li>
+                                <li>Liderar uma equipe multidisciplinar de profissionais locais e internacionais</li>
+                                <li>Monitorar e avaliar o progresso dos projetos, preparando relatórios regulares</li>
+                                <li>Identificar oportunidades para expandir o impacto dos projetos existentes</li>
+                                <li>Garantir que todos os projetos sigam as melhores práticas de desenvolvimento sustentável</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="job-section">
+                            <h2>Requisitos</h2>
+                            <ul>
+                                <li>Licenciatura em Desenvolvimento Internacional, Gestão de Projetos, ou área relacionada</li>
+                                <li>Mínimo de 3 anos de experiência em gestão de projetos de desenvolvimento, preferencialmente na África Ocidental</li>
+                                <li>Fluência em Português; conhecimento de Crioulo guineense será uma vantagem</li>
+                                <li>Experiência comprovada na gestão de equipas multiculturais</li>
+                                <li>Fortes habilidades de comunicação e negociação</li>
+                                <li>Capacidade de trabalhar em ambientes desafiadores com recursos limitados</li>
+                                <li>Conhecimento dos principais doadores internacionais e seus requisitos</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="job-section">
+                            <h2>Benefícios</h2>
+                            <ul>
+                                <li>Salário competitivo (500.000 - 700.000 XOF mensal)</li>
+                                <li>Seguro de saúde internacional</li>
+                                <li>30 dias de férias anuais</li>
+                                <li>Oportunidades de desenvolvimento profissional</li>
+                                <li>Alojamento em Bissau (para candidatos não residentes)</li>
+                                <li>Ambiente de trabalho multicultural e dinâmico</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="job-section">
+                            <h2>Processo de Candidatura</h2>
+                            <p>Os candidatos interessados devem submeter o seu CV atualizado e uma carta de motivação explicando por que estão interessados na posição e como as suas qualificações e experiência os tornam adequados para o cargo.</p>
+                            <p>Apenas os candidatos pré-selecionados serão contactados para entrevistas. O processo de seleção incluirá uma entrevista inicial, seguida de uma avaliação prática e uma entrevista final com a direção.</p>
+                            <p>A ONG Internacional valoriza a diversidade e encoraja candidaturas de mulheres e grupos sub-representados.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="job-sidebar">
+                        <div class="company-card">
+                            <div class="company-logo">
+                                <img src="images/sos_logo.jpeg" alt="Logo da Empresa">
+                            </div>
+                            <h3>ONG Internacional</h3>
+                            <p>Desenvolvimento Comunitário</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Bissau, Guiné-Bissau</p>
+                            <a href="company-details.html?id=1" class="btn btn-outline">Ver Perfil</a>
+                        </div>
+                        
+                        <div class="similar-jobs">
+                            <h3>Vagas Semelhantes</h3>
+                            
+                            <div class="similar-job-item">
+                                <h4>Coordenador de Programas</h4>
+                                <div class="company">UNICEF</div>
+                                <div class="meta">
+                                    <span>Bissau</span>
+                                    <span>600.000 XOF</span>
+                                </div>
+                            </div>
+                            
+                            <div class="similar-job-item">
+                                <h4>Especialista em Agricultura</h4>
+                                <div class="company">FAO</div>
+                                <div class="meta">
+                                    <span>Bafatá</span>
+                                    <span>450.000 XOF</span>
+                                </div>
+                            </div>
+                            
+                            <div class="similar-job-item">
+                                <h4>Gestor de Logística</h4>
+                                <div class="company">Médicos Sem Fronteiras</div>
+                                <div class="meta">
+                                    <span>Bissau</span>
+                                    <span>550.000 XOF</span>
+                                </div>
+                            </div>
+                            
+                            <div class="similar-job-item">
+                                <h4>Técnico de Microfinanças</h4>
+                                <div class="company">Banco Africano de Desenvolvimento</div>
+                                <div class="meta">
+                                    <span>Bissau</span>
+                                    <span>400.000 XOF</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal de Candidatura -->
+    <div id="apply-modal" class="apply-modal">
+        <div class="apply-modal-content">
+            <div class="apply-modal-header">
+                <h3>Candidatar-se à vaga</h3>
+                <button id="close-modal" class="apply-modal-close">&times;</button>
+            </div>
+            
+            <form id="apply-form" class="apply-form">
+                <div class="form-group">
+                    <label for="full-name">Nome Completo</label>
+                    <input type="text" id="full-name" name="fullName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="resume">Currículo (PDF, DOC, DOCX)</label>
+                    <div class="file-input">
+                        <label for="resume-file" class="file-input-button">
+                            <i class="fas fa-upload"></i> Selecionar arquivo
+                        </label>
+                        <input type="file" id="resume-file" name="resume" style="display: none;" accept=".pdf,.doc,.docx" required>
+                        <span id="file-name" class="file-name">Nenhum arquivo selecionado</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cover-letter">Carta de Motivação</label>
+                    <textarea id="cover-letter" name="coverLetter" placeholder="Explique por que você é o candidato ideal para esta vaga..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary submit-btn">Enviar Candidatura</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>MyJob</h2>
+                    <p>Conectando talentos às melhores oportunidades em Guiné-Bissau</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Para Candidatos</h3>
+                        <ul>
+                            <li><a href="jobs.html">Buscar Vagas</a></li>
+                            <li><a href="register.html">Criar Conta</a></li>
+                            <li><a href="#">Dicas de Carreira</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Para Empresas</h3>
+                        <ul>
+                            <li><a href="employer-register.html">Cadastrar Empresa</a></li>
+                            <li><a href="#">Publicar Vagas</a></li>
+                            <li><a href="#">Planos e Preços</a></li>
+                            <li><a href="#">Recursos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Empresa</h3>
+                        <ul>
+                            <li><a href="about.html">Sobre Nós</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contato</a></li>
+                            <li><a href="#">Termos de Uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 MyJob - Todos os direitos reservados</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modal de candidatura
+            const applyButton = document.getElementById('apply-button');
+            const applyModal = document.getElementById('apply-modal');
+            const closeModal = document.getElementById('close-modal');
+            
+            if (applyButton && applyModal && closeModal) {
+                applyButton.addEventListener('click', function() {
+                    applyModal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Impedir rolagem do body
+                });
+                
+                closeModal.addEventListener('click', function() {
+                    applyModal.classList.remove('active');
+                    document.body.style.overflow = ''; // Restaurar rolagem do body
+                });
+                
+                // Fechar modal ao clicar fora do conteúdo
+                applyModal.addEventListener('click', function(e) {
+                    if (e.target === applyModal) {
+                        applyModal.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+            
+            // Exibir nome do arquivo selecionado
+            const resumeFile = document.getElementById('resume-file');
+            const fileName = document.getElementById('file-name');
+            
+            if (resumeFile && fileName) {
+                resumeFile.addEventListener('change', function() {
+                    if (this.files.length > 0) {
+                        fileName.textContent = this.files[0].name;
+                    } else {
+                        fileName.textContent = 'Nenhum arquivo selecionado';
+                    }
+                });
+            }
+            
+            // Salvar vaga
+            const saveJobButton = document.querySelector('.save-job');
+            if (saveJobButton) {
+                saveJobButton.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        notifications.success('Vaga salva com sucesso!');
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        notifications.info('Vaga removida dos favoritos.');
+                    }
+                });
+            }
+            
+            // Envio do formulário de candidatura
+            const applyForm = document.getElementById('apply-form');
+            if (applyForm) {
+                applyForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Mostrar indicador de carregamento
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.textContent;
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span class="spinner"></span> Processando...';
+                    
+                    // Simular envio (será substituído pela chamada real à API)
+                    setTimeout(() => {
+                        // Restaurar botão
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalButtonText;
+                        
+                        // Fechar modal
+                        applyModal.classList.remove('active');
+                        document.body.style.overflow = '';
+                        
+                        // Mostrar notificação de sucesso
+                        notifications.success('Candidatura enviada com sucesso! Entraremos em contato em breve.');
+                        
+                        // Limpar formulário
+                        applyForm.reset();
+                        fileName.textContent = 'Nenhum arquivo selecionado';
+                    }, 2000);
+                });
+            }
+            
+            // Carregar detalhes da vaga da API (simulação)
+            function loadJobDetails() {
+                // Obter ID da vaga da URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const jobId = urlParams.get('id');
+                
+                if (!jobId) {
+                    return; // Usar dados estáticos se não houver ID
+                }
+                
+                // Aqui você faria a chamada para a API
+                console.log('Carregando detalhes da vaga:', jobId);
+                
+                // Simulação de carregamento (será substituída por uma chamada real à API quando o backend estiver pronto
+            }
+            
+            // Carregar detalhes da vaga ao iniciar
+            loadJobDetails();
+        });
+    </script>
+</body>
+</html>

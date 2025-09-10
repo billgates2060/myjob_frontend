@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca de Vagas - MyJob</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .jobs-search-container {
+            background-color: var(--primary-color);
+            padding: 40px 0;
+            color: white;
+        }
+        
+        .search-form {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .search-form-group {
+            flex: 1;
+            position: relative;
+        }
+        
+        .search-form-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        .search-form input,
+        .search-form select {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .search-form button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        .jobs-filter-container {
+            display: flex;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .jobs-filter-sidebar {
+            flex: 0 0 280px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            align-self: flex-start;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .filter-section {
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+        
+        .filter-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .filter-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-checkbox input {
+            margin-right: 10px;
+        }
+        
+        .filter-checkbox label {
+            font-size: 14px;
+            color: var(--text-color);
+        }
+        
+        .filter-range {
+            margin-top: 10px;
+        }
+        
+        .filter-range-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .jobs-results-container {
+            flex: 1;
+        }
+        
+        .jobs-count {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: var(--text-light);
+        }
+        
+        .jobs-sort {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .sort-options {
+            display: flex;
+            align-items: center;
+        }
+        
+        .sort-options label {
+            margin-right: 10px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .sort-options select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .view-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .view-option {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .view-option.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .jobs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .job-card {
+            margin-bottom: 0;
+        }
+        
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 5px;
+        }
+        
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .pagination-item.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .pagination-item:hover:not(.active) {
+            background-color: var(--bg-light);
+        }
+        
+        .loading-indicator {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+        }
+        
+        .error-message {
+            text-align: center;
+            padding: 40px;
+            color: var(--danger-color);
+        }
+        
+        @media (max-width: 992px) {
+            .search-form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .jobs-filter-container {
+                flex-direction: column;
+            }
+            
+            .jobs-filter-sidebar {
+                flex: 0 0 auto;
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">MyJob</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="jobs.html" class="active">Vagas</a></li>
+                    <li><a href="companies.html">Empresas</a></li>
+                    <li><a href="about.html">Sobre</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons guest-only">
+                <a href="login.html" class="btn btn-outline">Entrar</a>
+                <a href="register.html" class="btn btn-primary">Cadastrar</a>
+            </div>
+            <div class="user-info auth-only" style="display:none">
+                <span id="user-name"></span>
+                <button id="logout-btn" class="btn btn-outline" title="Sair"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            </div>
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="jobs-search-container">
+        <div class="container">
+            <form class="search-form" id="jobs-search-form">
+                <div class="search-form-row">
+                    <div class="search-form-group">
+                        <i class="fas fa-search"></i>
+                        <input type="text" name="keyword" placeholder="Cargo, habilidade ou empresa">
+                    </div>
+                    <div class="search-form-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" name="location" placeholder="Localização">
+                    </div>
+                    <div class="search-form-group">
+                        <i class="fas fa-briefcase"></i>
+                        <select name="jobType">
+                            <option value="">Tipo de contrato</option>
+                            <option value="full-time">Tempo Integral</option>
+                            <option value="part-time">Meio Período</option>
+                            <option value="contract">Contrato</option>
+                            <option value="temporary">Temporário</option>
+                            <option value="internship">Estágio</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar Vagas</button>
+            </form>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <div class="jobs-filter-container">
+                <aside class="jobs-filter-sidebar">
+                    <div class="filter-section">
+                        <h3>Categoria</h3>
+                        <div class="filter-options">
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="category-tech" name="category" value="technology">
+                                <label for="category-tech">Tecnologia</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="category-marketing" name="category" value="marketing">
+                                <label for="category-marketing">Marketing</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="category-finance" name="category" value="finance">
+                                <label for="category-finance">Finanças</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="category-healthcare" name="category" value="healthcare">
+                                <label for="category-healthcare">Saúde</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="category-education" name="category" value="education">
+                                <label for="category-education">Educação</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="category-sales" name="category" value="sales">
+                                <label for="category-sales">Vendas</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <h3>Tipo de Contrato</h3>
+                        <div class="filter-options">
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="type-full" name="jobType" value="full-time">
+                                <label for="type-full">Tempo Integral</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="type-part" name="jobType" value="part-time">
+                                <label for="type-part">Meio Período</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="type-contract" name="jobType" value="contract">
+                                <label for="type-contract">Contrato</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="type-temp" name="jobType" value="temporary">
+                                <label for="type-temp">Temporário</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="type-intern" name="jobType" value="internship">
+                                <label for="type-intern">Estágio</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <h3>Experiência</h3>
+                        <div class="filter-options">
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="exp-entry" name="experience" value="entry">
+                                <label for="exp-entry">Estágio/Trainee</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="exp-junior" name="experience" value="junior">
+                                <label for="exp-junior">Júnior (0-2 anos)</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="exp-mid" name="experience" value="mid">
+                                <label for="exp-mid">Pleno (2-5 anos)</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="checkbox" id="exp-senior" name="experience" value="senior">
+                                <label for="exp-senior">Sênior (5+ anos)</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <h3>Faixa Salarial</h3>
+                        <div class="filter-options">
+                            <div class="filter-range">
+                                <input type="range" id="salary-range" name="salary" min="1000" max="20000" step="1000" value="5000">
+                                <div class="filter-range-values">
+                                    <span>CFA 1.000</span>
+                                    <span id="salary-value">CFA 5.000</span>
+                                    <span>CFA 20.000+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <h3>Data de Publicação</h3>
+                        <div class="filter-options">
+                            <div class="filter-checkbox">
+                                <input type="radio" id="date-any" name="date" value="any" checked>
+                                <label for="date-any">Qualquer data</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="radio" id="date-today" name="date" value="today">
+                                <label for="date-today">Hoje</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="radio" id="date-week" name="date" value="week">
+                                <label for="date-week">Últimos 7 dias</label>
+                            </div>
+                            <div class="filter-checkbox">
+                                <input type="radio" id="date-month" name="date" value="month">
+                                <label for="date-month">Último mês</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="apply-filters" class="btn btn-primary">Aplicar Filtros</button>
+                </aside>
+                
+                <div class="jobs-results-container">
+                    <div class="jobs-count">
+                        <span id="jobs-count-number">125</span> vagas encontradas
+                    </div>
+                    
+                    <div class="jobs-sort">
+                        <div class="sort-options">
+                            <label for="sort-by">Ordenar por:</label>
+                            <select id="sort-by" name="sort">
+                                <option value="relevance">Relevância</option>
+                                <option value="date">Data de publicação</option>
+                                <option value="salary-high">Maior salário</option>
+                                <option value="salary-low">Menor salário</option>
+                            </select>
+                        </div>
+                        
+                        <div class="view-options">
+                            <div class="view-option active" data-view="list">
+                                <i class="fas fa-list"></i>
+                            </div>
+                            <div class="view-option" data-view="grid">
+                                <i class="fas fa-th-large"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="jobs-list" id="jobs-container">
+                        <!-- Vagas serão carregadas dinamicamente pela API -->
+                    </div>
+                    
+                    <div class="pagination">
+                        <div class="pagination-item active">1</div>
+                        <div class="pagination-item">2</div>
+                        <div class="pagination-item">3</div>
+                        <div class="pagination-item">4</div>
+                        <div class="pagination-item">5</div>
+                        <div class="pagination-item"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>MyJob</h2>
+                    <p>Conectando talentos às melhores oportunidades</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Para Candidatos</h3>
+                        <ul>
+                            <li><a href="jobs.html">Buscar Vagas</a></li>
+                            <li><a href="register.html">Criar Conta</a></li>
+                            <li><a href="#">Dicas de Carreira</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Para Empresas</h3>
+                        <ul>
+                            <li><a href="employer-register.html">Cadastrar Empresa</a></li>
+                            <li><a href="#">Publicar Vagas</a></li>
+                            <li><a href="#">Planos e Preços</a></li>
+                            <li><a href="#">Recursos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Empresa</h3>
+                        <ul>
+                            <li><a href="about.html">Sobre Nós</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contato</a></li>
+                            <li><a href="#">Termos de Uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 MyJob - Todos os direitos reservados</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Atualizar valor do range de salário
+    const salaryRange = document.getElementById('salary-range');
+    const salaryValue = document.getElementById('salary-value');
+    if (salaryRange && salaryValue) {
+        salaryRange.addEventListener('input', function() {
+            salaryValue.textContent = `CFA ${this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+        });
+    }
+    // Alternar entre visualização em lista e grade
+    const viewOptions = document.querySelectorAll('.view-option');
+    const jobsContainer = document.getElementById('jobs-container');
+    let currentView = 'list';
+    if (viewOptions.length && jobsContainer) {
+        viewOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const view = this.getAttribute('data-view');
+                viewOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                currentView = view;
+                jobsContainer.className = view === 'grid' ? 'jobs-grid' : 'jobs-list';
+            });
+        });
+    }
+    // Função para renderizar vagas
+    function renderJobs(jobs) {
+        if (!jobs || jobs.length === 0) {
+            jobsContainer.innerHTML = '<div class="no-results">Nenhuma vaga encontrada.</div>';
+            document.getElementById('jobs-count-number').textContent = '0';
+            return;
+        }
+        let html = '';
+        jobs.forEach(job => {
+            html += `
+            <div class="job-card">
+                <div class="job-card-header">
+                    <div class="company-logo">
+                        <img src="images/sos_logo.jpeg" alt="Logo da Empresa">
+                    </div>
+                    <div class="job-card-title">
+                        <h3>${job.title}</h3>
+                        <p class="company-name">${job.company ? job.company.name : ''}</p>
+                    </div>
+                </div>
+                <div class="job-card-body">
+                    <div class="job-info">
+                        <span><i class="fas fa-map-marker-alt"></i> ${job.location || ''}</span>
+                        <span><i class="fas fa-briefcase"></i> ${job.job_type || ''}</span>
+                        <span><i class="fas fa-money-bill-wave"></i> ${job.min_salary ? 'CFA ' + job.min_salary : ''}${job.max_salary ? ' - CFA ' + job.max_salary : ''}</span>
+                    </div>
+                    <p class="job-description">${job.description ? job.description.substring(0, 120) + '...' : ''}</p>
+                </div>
+                <div class="job-card-footer">
+                    <a href="job-details.html?id=${job.id}" class="btn btn-outline">Ver Detalhes</a>
+                    <span class="posted-date">${job.posted_at ? 'Publicado em ' + new Date(job.posted_at).toLocaleDateString() : ''}</span>
+                </div>
+            </div>
+            `;
+        });
+        jobsContainer.innerHTML = html;
+        document.getElementById('jobs-count-number').textContent = jobs.length;
+    }
+    // Carregar vagas ao abrir a página
+    api.jobs.getAll().then(result => {
+        if (result.success) {
+            renderJobs(result.data);
+        } else {
+            jobsContainer.innerHTML = '<div class="error-message">Erro ao carregar vagas.</div>';
+        }
+    });
+    // Formulário de busca
+    const searchForm = document.getElementById('jobs-search-form');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const keyword = this.querySelector('input[name="keyword"]').value;
+            const location = this.querySelector('input[name="location"]').value;
+            const jobType = this.querySelector('select[name="jobType"]').value;
+            jobsContainer.innerHTML = '<div class="loading-indicator">Buscando vagas...</div>';
+            api.jobs.filter(location, '', jobType).then(result => {
+                if (result.success) {
+                    renderJobs(result.data);
+                } else {
+                    jobsContainer.innerHTML = '<div class="error-message">Erro ao buscar vagas.</div>';
+                }
+            });
+        });
+    }
+    // Aplicar filtros
+    const applyFiltersBtn = document.getElementById('apply-filters');
+    if (applyFiltersBtn) {
+        applyFiltersBtn.addEventListener('click', function() {
+            const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(el => el.value);
+            const jobTypes = Array.from(document.querySelectorAll('input[name="jobType"]:checked')).map(el => el.value);
+            const experiences = Array.from(document.querySelectorAll('input[name="experience"]:checked')).map(el => el.value);
+            const salary = document.getElementById('salary-range').value;
+            const date = document.querySelector('input[name="date"]:checked').value;
+            jobsContainer.innerHTML = '<div class="loading-indicator">Aplicando filtros...</div>';
+            // Exemplo: só filtra por localização e tipo de contrato
+            api.jobs.filter('', categories[0] || '', jobTypes[0] || '').then(result => {
+                if (result.success) {
+                    renderJobs(result.data);
+                } else {
+                    jobsContainer.innerHTML = '<div class="error-message">Erro ao aplicar filtros.</div>';
+                }
+            });
+        });
+    }
+});
+</script>
+</body>
+</html>

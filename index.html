@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyJob - Encontre a vaga ideal para você</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>MyJob</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Início</a></li>
+                    <li><a href="jobs.html">Vagas</a></li>
+                    <li><a href="companies.html">Empresas</a></li>
+                    <li><a href="about.html">Sobre</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons guest-only">
+                <a href="login.html" class="btn btn-outline">Entrar</a>
+                <a href="register.html" class="btn btn-primary">Cadastrar</a>
+            </div>
+            <div class="user-info auth-only" style="display:none">
+                <span id="user-name"></span>
+                <button id="logout-btn" class="btn btn-outline" title="Sair"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            </div>
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Encontre o emprego dos seus sonhos</h2>
+                <p>Milhares de vagas disponíveis para você dar o próximo passo na sua carreira</p>
+                <div class="search-box">
+                    <form action="jobs.html" method="get">
+                        <div class="search-group">
+                            <input type="text" placeholder="Cargo, habilidade ou empresa" name="keyword">
+                            <input type="text" placeholder="Localização" name="location">
+                            <button type="submit" class="btn btn-primary">Buscar Vagas</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-jobs">
+        <div class="container">
+            <div class="section-header">
+                <h2>Vagas em Destaque</h2>
+                <a href="jobs.html" class="view-all">Ver todas</a>
+            </div>
+            <div class="jobs-container" id="featured-jobs">
+                <!-- Vagas em destaque serão carregadas dinamicamente pela API -->
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-companies">
+        <div class="container">
+            <div class="section-header">
+                <h2>Empresas em Destaque</h2>
+                <a href="companies.html" class="view-all">Ver todas</a>
+            </div>
+            <div class="companies-container" id="featured-companies">
+                <!-- Empresas em destaque serão carregadas dinamicamente pela API -->
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>Como Funciona</h2>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3>Crie sua conta</h3>
+                    <p>Cadastre-se gratuitamente e crie seu perfil profissional</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Encontre vagas</h3>
+                    <p>Busque entre milhares de vagas disponíveis</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                    <h3>Candidate-se</h3>
+                    <p>Envie sua candidatura com apenas um clique</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Comece a trabalhar</h3>
+                    <p>Receba propostas e inicie sua nova carreira</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Pronto para encontrar seu próximo emprego?</h2>
+                <p>Junte-se a milhares de profissionais que já encontraram o emprego ideal através do MyJob</p>
+                <a href="register.html" class="btn btn-primary">Cadastre-se Agora</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>MyJob</h2>
+                    <p>Conectando talentos às melhores oportunidades</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Para Candidatos</h3>
+                        <ul>
+                            <li><a href="jobs.html">Buscar Vagas</a></li>
+                            <li><a href="register.html">Criar Conta</a></li>
+                            <li><a href="#">Dicas de Carreira</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Para Empresas</h3>
+                        <ul>
+                            <li><a href="employer-register.html">Cadastrar Empresa</a></li>
+                            <li><a href="#">Publicar Vagas</a></li>
+                            <li><a href="#">Planos e Preços</a></li>
+                            <li><a href="#">Recursos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Empresa</h3>
+                        <ul>
+                            <li><a href="about.html">Sobre Nós</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contato</a></li>
+                            <li><a href="#">Termos de Uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 MyJob - Todos os direitos reservados</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Carregar vagas em destaque
+    api.jobs.getAll().then(result => {
+        const jobsContainer = document.getElementById('featured-jobs');
+        if (result.success && jobsContainer) {
+            let html = '';
+            if (Array.isArray(result.data)) {
+                (result.data || []).slice(0, 6).forEach(job => {
+                    html += `
+                    <div class='job-card'>
+                        <div class='job-card-header'>
+                            <div class='company-logo'><img src='images/sos_logo.jpeg' alt='Logo da Empresa'></div>
+                            <div class='job-card-title'><h3>${job.title}</h3><p class='company-name'>${job.company ? job.company.name : ''}</p></div>
+                        </div>
+                        <div class='job-card-body'>
+                            <div class='job-info'>
+                                <span><i class='fas fa-map-marker-alt'></i> ${job.location || ''}</span>
+                                <span><i class='fas fa-briefcase'></i> ${job.job_type || ''}</span>
+                                <span><i class='fas fa-money-bill-wave'></i> ${job.min_salary ? 'CFA ' + job.min_salary : ''}${job.max_salary ? ' - CFA ' + job.max_salary : ''}</span>
+                            </div>
+                            <p class='job-description'>${job.description ? job.description.substring(0, 120) + '...' : ''}</p>
+                        </div>
+                        <div class='job-card-footer'>
+                            <a href='job-details.html?id=${job.id}' class='btn btn-outline'>Ver Detalhes</a>
+                            <span class='posted-date'>${job.posted_at ? 'Publicado em ' + new Date(job.posted_at).toLocaleDateString() : ''}</span>
+                        </div>
+                    </div>
+                    `;
+                });
+            }
+            jobsContainer.innerHTML = html || '<div class="no-results">Nenhuma vaga em destaque.</div>';
+        }
+    });
+    // Carregar empresas em destaque (exemplo: api.companies.getAll())
+    if (api.companies && api.companies.getAll) {
+        api.companies.getAll().then(result => {
+            const companiesContainer = document.getElementById('featured-companies');
+            if (result.success && companiesContainer) {
+                let html = '';
+                if (Array.isArray(result.data)) {
+                    (result.data || []).slice(0, 6).forEach(company => {
+                        html += `
+                        <div class='company-card'>
+                            <div class='company-logo'><img src='images/sos_logo.jpeg' alt='Logo da Empresa'></div>
+                            <h3>${company.name}</h3>
+                            <p>${company.industry || ''}</p>
+                            <p><i class='fas fa-map-marker-alt'></i> ${company.location || ''}</p>
+                            <a href='company-profile.html?id=${company.id}' class='btn btn-outline'>Ver Perfil</a>
+                        </div>
+                        `;
+                    });
+                }
+                companiesContainer.innerHTML = html || '<div class="no-results">Nenhuma empresa em destaque.</div>';
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>

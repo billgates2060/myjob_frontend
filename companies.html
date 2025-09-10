@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresas - MyJob</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">MyJob</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="jobs.html">Vagas</a></li>
+                    <li><a href="companies.html" class="active">Empresas</a></li>
+                    <li><a href="about.html">Sobre</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Entrar</a>
+                <a href="register.html" class="btn btn-primary">Cadastrar</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="featured-companies">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Empresas em Destaque</h2>
+                </div>
+                <div class="companies-container" id="companies-list">
+                    <!-- Empresas serão carregadas dinamicamente pela API -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>MyJob</h2>
+                    <p>Conectando talentos às melhores oportunidades</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Para Candidatos</h3>
+                        <ul>
+                            <li><a href="jobs.html">Buscar Vagas</a></li>
+                            <li><a href="register.html">Criar Conta</a></li>
+                            <li><a href="#">Dicas de Carreira</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Para Empresas</h3>
+                        <ul>
+                            <li><a href="employer-register.html">Cadastrar Empresa</a></li>
+                            <li><a href="#">Publicar Vagas</a></li>
+                            <li><a href="#">Planos e Preços</a></li>
+                            <li><a href="#">Recursos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Empresa</h3>
+                        <ul>
+                            <li><a href="about.html">Sobre Nós</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contato</a></li>
+                            <li><a href="#">Termos de Uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 MyJob - Todos os direitos reservados</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (api.companies && api.companies.getAll) {
+        api.companies.getAll().then(result => {
+            const companiesList = document.getElementById('companies-list');
+            if (result.success && companiesList) {
+                let html = '';
+                (result.data || []).forEach(company => {
+                    html += `
+                    <div class='company-card'>
+                        <div class='company-logo'><img src='images/sos_logo.jpeg' alt='Logo da Empresa'></div>
+                        <h3>${company.name}</h3>
+                        <p>${company.industry || ''}</p>
+                        <p><i class='fas fa-map-marker-alt'></i> ${company.location || ''}</p>
+                        <a href='company-profile.html?id=${company.id}' class='btn btn-outline'>Ver Perfil</a>
+                    </div>
+                    `;
+                });
+                companiesList.innerHTML = html || '<div class="no-results">Nenhuma empresa encontrada.</div>';
+            }
+        });
+    }
+});
+    </script>
+</body>
+</html>

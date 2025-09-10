@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós - MyJob Guiné-Bissau</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .about-container {
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .about-header h1 {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .about-header p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .about-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 40px;
+        }
+
+        .about-section h2 {
+            font-size: 24px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .about-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .about-section p {
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .about-section ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .about-section ul li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .team-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .team-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 15px;
+            background-color: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .team-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-photo .avatar-placeholder {
+            font-size: 48px;
+            color: var(--text-light);
+        }
+
+        .team-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .team-bio {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .school-info {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .school-logo {
+            flex: 0 0 200px;
+            height: 200px;
+            background-color: var(--bg-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .school-logo img {
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .school-details {
+            flex: 1;
+        }
+
+        .school-details h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            flex: 1;
+            min-width: 200px;
+            background-color: var(--bg-light);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 30px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .contact-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .contact-text {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .school-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .school-logo {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">MyJob</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="jobs.html">Vagas</a></li>
+                    <li><a href="companies.html">Empresas</a></li>
+                    <li><a href="about.html" class="active">Sobre</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Entrar</a>
+                <a href="register.html" class="btn btn-primary">Cadastrar</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="about-container">
+                <div class="about-header">
+                    <h1>Sobre Nós</h1>
+                    <p>Projeto de final de curso desenvolvido por alunos do Liceu Politécnico SOS da Guiné-Bissau</p>
+                </div>
+
+                <div class="about-section">
+                    <h2>Nosso Projeto</h2>
+                    <p>O <strong>MyJob</strong> é um projeto de final de curso desenvolvido por alunos do Liceu
+                        Politécnico SOS da Guiné-Bissau. Nossa plataforma foi criada com o objetivo de conectar
+                        candidatos a oportunidades de emprego em Guiné-Bissau, facilitando o processo de recrutamento e
+                        seleção para empresas locais e internacionais que atuam no país.</p>
+
+                    <p>Identificamos que o mercado de trabalho em Guiné-Bissau enfrenta desafios significativos na
+                        conexão entre talentos e empregadores. Muitas vezes, as empresas têm dificuldade em encontrar
+                        profissionais qualificados, enquanto candidatos talentosos não conseguem descobrir oportunidades
+                        adequadas às suas habilidades. O MyJob surge como uma solução tecnológica para esse problema,
+                        criando uma ponte digital entre candidatos e empregadores.</p>
+
+                    <p>Nossa plataforma oferece:</p>
+                    <ul>
+                        <li>Um ambiente intuitivo para candidatos buscarem vagas de emprego</li>
+                        <li>Ferramentas para empresas publicarem e gerenciarem suas vagas</li>
+                        <li>Sistema de candidaturas simplificado</li>
+                        <li>Perfis detalhados para candidatos e empresas</li>
+                        <li>Recursos de busca avançada e filtros personalizados</li>
+                    </ul>
+
+                    <p>Este projeto representa não apenas nossa formação acadêmica, mas também nosso compromisso com o
+                        desenvolvimento socioeconômico de Guiné-Bissau, contribuindo para a modernização do mercado de
+                        trabalho local através da tecnologia.</p>
+                </div>
+
+                <div class="about-section">
+                    <h2>Nossa Equipe</h2>
+                    <p>Somos um grupo de estudantes finalistas do Liceu Politécnico SOS da Guiné-Bissau, apaixonados por
+                        tecnologia e comprometidos com o desenvolvimento do nosso país. Cada membro da equipe contribuiu
+                        com suas habilidades e conhecimentos para tornar este projeto uma realidade.</p>
+
+                    <div class="team-container">
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="images/edc.jpg" alt="Imagem do Erbio Da Costa" srcset="">
+                            </div>
+                            <h3 class="team-name">Erbio Da Costa</h3>
+                            <p class="team-role">Aluno do 12º ano - Curso de TIC</p>
+                            <p class="team-bio">Responsável pelo desenvolvimento frontend e design da interface do
+                                usuário, garantindo uma experiência intuitiva e responsiva.</p>
+                        </div>
+
+                        <div class="team-member">
+                            <div class="team-photo">
+                                <img src="images/crn.jpg" alt="Imagem de Carlos Rafael Namfantche" srcset="">
+                            </div>
+                            <h3 class="team-name">Carlos Rafael Namfantche</h3>
+                            <p class="team-role">Aluno do 12º ano - Curso de TIC</p>
+                            <p class="team-bio">Responsável pelo desenvolvimento backend e integração com banco de
+                                dados, assegurando o funcionamento eficiente do sistema.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h2>Nossa Escola</h2>
+                    <div class="school-info">
+                        <div class="school-logo">
+                            <img src="images/sos_logo.jpeg" alt="Logo do Liceu Politécnico SOS">
+                        </div>
+
+                        <div class="school-details">
+                            <h3>Liceu Politécnico SOS da Guiné-Bissau</h3>
+                            <p>O Liceu Politécnico SOS é uma instituição de ensino de referência em Guiné-Bissau,
+                                dedicada à formação técnica e profissional de jovens guineenses. Fundado com o apoio da
+                                organização SOS Aldeias Infantis, o liceu tem como missão proporcionar educação de
+                                qualidade e preparar os estudantes para os desafios do mercado de trabalho.</p>
+
+                            <p>A instituição oferece diversos cursos técnicos e profissionalizantes, com foco em áreas
+                                estratégicas para o desenvolvimento do país, como tecnologia da informação,
+                                administração, contabilidade e engenharia. O Liceu Politécnico SOS destaca-se pela
+                                qualidade do ensino, infraestrutura moderna e corpo docente qualificado.</p>
+
+                            <p>Este projeto de final de curso representa o culminar da nossa formação nesta prestigiada
+                                instituição, aplicando os conhecimentos adquiridos ao longo dos anos para desenvolver
+                                uma solução tecnológica com impacto real na sociedade guineense.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h2>Agradecimentos</h2>
+                    <p>Gostaríamos de expressar nossa sincera gratidão a todos que contribuíram para a realização deste
+                        projeto:</p>
+
+                    <ul>
+                        <li>À direção do Liceu Politécnico SOS da Guiné-Bissau, pelo apoio institucional e
+                            infraestrutura disponibilizada</li>
+                        <li>Aos nossos professores e orientadores, pela dedicação, conhecimento compartilhado e
+                            orientação ao longo do desenvolvimento do projeto</li>
+                        <li>Às empresas e profissionais que participaram das entrevistas e pesquisas, fornecendo
+                            insights valiosos sobre as necessidades do mercado de trabalho local</li>
+                        <li>Às nossas famílias, pelo apoio incondicional e compreensão durante os momentos de dedicação
+                            intensa ao projeto</li>
+                        <li>Aos colegas de curso, pela colaboração, troca de experiências e ambiente de aprendizado
+                            colaborativo</li>
+                    </ul>
+
+                    <p>Este projeto não seria possível sem o apoio e contribuição de cada uma dessas pessoas e
+                        instituições. Nosso muito obrigado!</p>
+                </div>
+
+                <div class="about-section">
+                    <h2>Entre em Contato</h2>
+                    <p>Se você tiver dúvidas, sugestões ou quiser saber mais sobre o projeto MyJob, entre em contato
+                        conosco:</p>
+
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-title">Email</div>
+                            <div class="contact-text">namfantchecarlos.123@gamil.com</div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-title">Telefone</div>
+                            <div class="contact-text">+245 95 661 0877</div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-title">Endereço</div>
+                            <div class="contact-text">Liceu Politécnico SOS, Bissau, Guiné-Bissau</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>MyJob</h2>
+                    <p>Conectando talentos às melhores oportunidades em Guiné-Bissau</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Para Candidatos</h3>
+                        <ul>
+                            <li><a href="jobs.html">Buscar Vagas</a></li>
+                            <li><a href="register.html">Criar Conta</a></li>
+                            <li><a href="#">Dicas de Carreira</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Para Empresas</h3>
+                        <ul>
+                            <li><a href="employer-register.html">Cadastrar Empresa</a></li>
+                            <li><a href="#">Publicar Vagas</a></li>
+                            <li><a href="#">Planos e Preços</a></li>
+                            <li><a href="#">Recursos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Empresa</h3>
+                        <ul>
+                            <li><a href="about.html">Sobre Nós</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contato</a></li>
+                            <li><a href="#">Termos de Uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 MyJob - Projeto de final de curso do Liceu Politécnico SOS da Guiné-Bissau</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
